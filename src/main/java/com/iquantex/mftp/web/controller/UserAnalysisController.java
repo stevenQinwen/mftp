@@ -150,11 +150,7 @@ public class UserAnalysisController extends BaseController{
 	    	
 	    	}	
 				if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {				
-				
-				
-			
-				
-				
+			    
 			}
 			else {
 				
@@ -177,8 +173,6 @@ public class UserAnalysisController extends BaseController{
 	    return resultObj;
 		
 	}
-	
-	
 	
 }
 

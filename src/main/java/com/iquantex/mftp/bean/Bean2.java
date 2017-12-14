@@ -3,6 +3,7 @@ package com.iquantex.mftp.bean;
 import java.io.Serializable;
 
 public class Bean2 implements Serializable{
+	
     private String name;
 
     private Double value;

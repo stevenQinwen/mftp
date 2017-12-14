@@ -14,19 +14,30 @@ import java.util.Date;
 		  buy_accuracy VARCHAR(20),
 		  redeem_accuracy VARCHAR(20),
 		  PRIMARY KEY (`date`)
-		  
 )*/
+
+/**
+ * 说明：这个类是决定模型需要返回到前端所需要展现的模型结果和模型表现
+ * @author shengwen.qin
+ * @date 2017年12月14日
+ */
 public class Predict_Result implements Serializable {
 	private String date;
 	
 	private String actual_buy_amounts;
 	private String actual_redeem_amounts;
 	
+	
 	private Long predict_buy_amounts;
 	private String predict_redeem_amounts;
 	
 	private String buy_accuracy;
 	private String redeem_accuracy;
+	
+	private String buy_redeem_offset;
+	
+	private String buy_redeem_offset_accuracy;
+	
 	
 	public String getDate() {
 		return date;
@@ -70,6 +81,18 @@ public class Predict_Result implements Serializable {
 	}
 	public void setRedeem_accuracy(String redeem_accuracy) {
 		this.redeem_accuracy = redeem_accuracy;
+	}
+	public String getBuy_redeem_offset() {
+		return buy_redeem_offset;
+	}
+	public void setBuy_redeem_offset(String buy_redeem_offset) {
+		this.buy_redeem_offset = buy_redeem_offset;
+	}
+	public String getBuy_redeem_offset_accuracy() {
+		return buy_redeem_offset_accuracy;
+	}
+	public void setBuy_redeem_offset_accuracy(String buy_redeem_offset_accuracy) {
+		this.buy_redeem_offset_accuracy = buy_redeem_offset_accuracy;
 	}
 	
 	
