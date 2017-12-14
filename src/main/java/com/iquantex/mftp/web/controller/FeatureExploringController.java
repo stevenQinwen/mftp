@@ -32,6 +32,7 @@ public class FeatureExploringController extends BaseController{
 	 * @param featureName接收的是要检验的特征的名字
 	 * @return  
 	 */
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/select_target_and_feature/{targetName}/{featureName}",produces = "application/json; charset=utf-8")
 	public @ResponseBody ResultObj featureExploring(@PathVariable String targetName,@PathVariable String featureName) {
 		
