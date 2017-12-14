@@ -80,7 +80,9 @@ public class UserAnalysisController extends BaseController{
 		                ]
 		            }
 					]*/
+		
 		//list:data
+		
 		ArrayList<Bean1> data = new ArrayList<Bean1>();
 	    for (CustInfo daily_Macro_Factor : custInfoList) {
 	    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
@@ -171,7 +173,6 @@ public class UserAnalysisController extends BaseController{
 		}
 		resultObj.setMsg("成功");
 	    return resultObj;
-		
 	}
 	
 }
