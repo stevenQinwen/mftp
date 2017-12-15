@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iquantex.mftp.dao.ModelFitParamDao">
+
+   <select id="selectModelFitParamList" parameterType="string"  resultType="modelFitParam">
+     <!-- 使用外面传递进sql的方式来执行，这样比较灵活，能够保存sql的原生态 -->
+     ${sql} 
+    <!--  SELECT 
+      t.One_intercept,
+      t.R2,
+      t.X0_2,
+      t.X0_times,
+      t.X0_x1,
+      t.X0_x2,
+      t.X0_x3,
+      t.X1_2,
+      t.X1_day,
+      t.X1_x2,
+      t.X1_x3,
+      t.X2_2,
+      t.X2_p2p_develop,
+      t.X2_x3,
+      t.X3_2,
+      t.X3_fund_7day_rate
+      FROM 
+      model_param_tmp t
+      WHERE t.flag =#{p1} ORDER BY t.generate_time  DESC LIMIT 1  -->
+   </select>
+</mapper>
+
+
+
+
+
+

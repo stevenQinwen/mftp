@@ -47,7 +47,7 @@ CREATE TABLE model_result (
  * @author shengwen.qin
  * @date 2017年12月14日
  */
-public class ModelParam {
+public class ModelFitData {
 		
 	 private Date date;
 	 
@@ -56,10 +56,10 @@ public class ModelParam {
 	 private Double redeem_times ;
 	 private Double redeem_amounts ;
 	 
-	 private Double buy_times_predict ;
-	 private Double redeem_times_predict ;
-	 private Double buy_amounts_predict ;
-	 private Double redeem_amounts_predict ;
+	 private Double buy_times_fit ;
+	 private Double redeem_times_fit ;
+	 private Double buy_amounts_fit ;
+	 private Double redeem_amounts_fit ;
 	 
 	 private Double buy_error ;
 	 private Double redeem_error ;
@@ -102,29 +102,29 @@ public class ModelParam {
 	public void setRedeem_amounts(Double redeem_amounts) {
 		this.redeem_amounts = redeem_amounts;
 	}
-	public Double getBuy_times_predict() {
-		return buy_times_predict;
+	public Double getBuy_times_fit() {
+		return buy_times_fit;
 	}
-	public void setBuy_times_predict(Double buy_times_predict) {
-		this.buy_times_predict = buy_times_predict;
+	public void setBuy_times_fit(Double buy_times_fit) {
+		this.buy_times_fit = buy_times_fit;
 	}
-	public Double getRedeem_times_predict() {
-		return redeem_times_predict;
+	public Double getRedeem_times_fit() {
+		return redeem_times_fit;
 	}
-	public void setRedeem_times_predict(Double redeem_times_predict) {
-		this.redeem_times_predict = redeem_times_predict;
+	public void setRedeem_times_fit(Double redeem_times_fit) {
+		this.redeem_times_fit = redeem_times_fit;
 	}
-	public Double getBuy_amounts_predict() {
-		return buy_amounts_predict;
+	public Double getBuy_amounts_fit() {
+		return buy_amounts_fit;
 	}
-	public void setBuy_amounts_predict(Double buy_amounts_predict) {
-		this.buy_amounts_predict = buy_amounts_predict;
+	public void setBuy_amounts_fit(Double buy_amounts_fit) {
+		this.buy_amounts_fit = buy_amounts_fit;
 	}
-	public Double getRedeem_amounts_predict() {
-		return redeem_amounts_predict;
+	public Double getRedeem_amounts_fit() {
+		return redeem_amounts_fit;
 	}
-	public void setRedeem_amounts_predict(Double redeem_amounts_predict) {
-		this.redeem_amounts_predict = redeem_amounts_predict;
+	public void setRedeem_amounts_fit(Double redeem_amounts_fit) {
+		this.redeem_amounts_fit = redeem_amounts_fit;
 	}
 	public Double getBuy_error() {
 		return buy_error;

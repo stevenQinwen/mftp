@@ -25,6 +25,7 @@ import java.util.Date;
  pd_next_6_day_redeem_amounts  COMMENT '预测下6天的赎回金额',
   pd_next_7_day_redeem_amounts  COMMENT '预测下7天的赎回金额'
 );
+
  * @author shengwen.qin
  * @date 2017年12月14日
  */

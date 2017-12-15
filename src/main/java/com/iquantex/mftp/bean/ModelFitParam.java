@@ -2,7 +2,7 @@ package com.iquantex.mftp.bean;
 
 import java.util.Date;
 
-public class ModelParamTmp {
+public class ModelFitParam {
 	
 	private Date generate_time;
 	private Double R2 ;

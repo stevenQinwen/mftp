@@ -18,7 +18,7 @@ import com.iquantex.mftp.bean.ModelPerform;
 import com.iquantex.mftp.common.utils.ResultObj;
 import com.iquantex.mftp.dao.CustInfoDao;
 import com.iquantex.mftp.dao.DailyMacrofactorDao;
-import com.iquantex.mftp.dao.ModelParamTmpDao;
+import com.iquantex.mftp.dao.ModelFitParamDao;
 import com.iquantex.mftp.dao.ModelPerformDao;
 
 
@@ -30,7 +30,7 @@ public class ModelPerformController extends BaseController{
 	@Autowired
 	private ModelPerformDao modelPerformDao;
 	@Autowired
-	private ModelParamTmpDao modelParamTmpDao;
+	private ModelFitParamDao modelFitParamDao;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/age_distributed/{targetName}/{featureName}")//待定
 	public @ResponseBody ResultObj getAgeDistribute(@PathVariable String targetName,@PathVariable String featureName) {

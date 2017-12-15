@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iquantex.mftp.dao.DailyMacrofactorDao">
 
+<!--为什么我只能这么做，因为sql占位符#{} 不能放在select from之间  -->
    <select id="selectBuyAmounts_p2p_interest_indexList" resultType="daily_Macro_Factor">
        SELECT date,daily_buy_amounts,p2p_interest_index FROM daily_marco_factor 
    </select>
