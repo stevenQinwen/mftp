@@ -32,265 +32,403 @@ public class FeatureExploringController extends BaseController{
 	 * @param featureName接收的是要检验的特征的名字
 	 * @return  
 	 */
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/select_target_and_feature/{targetName}/{featureName}",produces = "application/json; charset=utf-8")
 	public @ResponseBody ResultObj featureExploring(@PathVariable String targetName,@PathVariable String featureName) {
 		
 		//List<Predict_Result> predict_ResultList = showModelResultService.findPredict_ResultList(feature1,feature2); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
-		List<Daily_Macro_Factor> predict_ResultList = dailyMacrofactorDao.selectDailyMacroFactorList(targetName,featureName); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
+		//List<Daily_Macro_Factor> predict_ResultList = dailyMacrofactorDao.selectDailyMacroFactorList(targetName,featureName); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
 		
-		ArrayList<Bean1> data = new ArrayList<Bean1>();
-	    for (Daily_Macro_Factor daily_Macro_Factor : predict_ResultList) {
-	    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-	    	Bean2 bean3 = new Bean2();
-	    	Bean2 bean2 = new Bean2();
-	    		
-	    	
-	    	if("daily_buy_amounts".equals(targetName)) {
-	    		bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-	    		if("p2p_pop_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
-	    			
-	    		}else if("p2p_interest_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
-	    			
-	    		}else if("p2p_develop_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-	    			
-	    		}else if("p2p_term_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_term_index()));
-	    			
-	    		}else if("bond204_closePrice".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBond204_closePrice()));
-	    			
-	    		}
-	    		else if("cpi_cpi".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getCpi_cpi()));
-	    			
-	    		}else if("GDP_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getGDP_dataValue()));
-	    			
-	    		}else if("get_gdp_month_gdp_yoy".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getGet_gdp_month_gdp_yoy()));
-	    			
-	    		}else if("hs300_close".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
-	    			
-	    		}else if("hs300_volume".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_volume()));
-	    			
-	    		}else if("hs300_p_change".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_price_change()));
-	    			
-	    		}else if("hs300_ma5".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma5()));
-	    			
-	    		}else if("hs300_ma10".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma10()));
-	    			
-	    		}else if("hs300_ma20".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma20()));
-	    			
-	    		}else if("hs300_v_ma5".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma5()));
-	    			
-	    		}else if("hs300_v_ma10".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma10()));
-	    			
-	    		}else if("hs300_v_ma20".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma20()));
-	    			
-	    		}else if("money_supply_m2".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_m2()));
-	    			
-	    		}else if("money_supply_m2_yoy".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_m2_yoy()));
-	    			
-	    		}else if("money_supply_cd".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_cd()));
-	    			
-	    		}else if("money_supply_qm".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_qm()));
-	    			
-	    		}else if("ppi_food".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getPpi_food()));
-	    			
-	    		}else if("Shibor_rate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
-	    			
-	    		}else if("real_estate_invest_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getReal_estate_invest_dataValue()));
-	    			
-	    		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getDomestic_fiscal_expenditure_dataValue()));
-	    			
-	    		}else if("domestic_fiscal_income_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getDomestic_fiscal_income_dataValue()));
-	    			
-	    		}else if("economic_climate_index_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getEconomic_climate_index_dataValue()));
-	    			
-	    		}else if("consume_climate_index_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getConsume_climate_index_dataValue()));
-	    			
-	    		}else if("base_loan_rate_1year".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBase_loan_rate_1year()));
-	    			
-	    		}else if("Inter_bank_lending_day_preCloseRate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_preCloseRate()));
-	    			
-	    		}else if("Inter_bank_lending_day_bpChg".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_bpChg()));
-	    			
-	    		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
-	    			
-	    		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverChg()));
-	    			
-	    		}else if("money_fund_7day_rate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_fund_7day_rate()));
-	    			
-	    		}
-	    		else {
-	    			//bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
-	    			
-	    		}
-	    		
-	    	}else if("daily_redeem_amounts".equals(targetName)) {
-	    		bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
-	    		if("p2p_pop_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
-	    			
-	    		}else if("p2p_interest_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
-	    			
-	    		}else if("p2p_develop_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-	    			
-	    		}else if("p2p_term_index".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_term_index()));
-	    			
-	    		}else if("bond204_closePrice".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBond204_closePrice()));
-	    			
-	    		}
-	    		else if("cpi_cpi".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getCpi_cpi()));
-	    			
-	    		}else if("GDP_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getGDP_dataValue()));
-	    			
-	    		}else if("get_gdp_month_gdp_yoy".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getGet_gdp_month_gdp_yoy()));
-	    			
-	    		}else if("hs300_close".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
-	    			
-	    		}else if("hs300_volume".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_volume()));
-	    			
-	    		}else if("hs300_p_change".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_price_change()));
-	    			
-	    		}else if("hs300_ma5".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma5()));
-	    			
-	    		}else if("hs300_ma10".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma10()));
-	    			
-	    		}else if("hs300_ma20".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_ma20()));
-	    			
-	    		}else if("hs300_v_ma5".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma5()));
-	    			
-	    		}else if("hs300_v_ma10".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma10()));
-	    			
-	    		}else if("hs300_v_ma20".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_v_ma20()));
-	    			
-	    		}else if("money_supply_m2".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_m2()));
-	    			
-	    		}else if("money_supply_m2_yoy".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_m2_yoy()));
-	    			
-	    		}else if("money_supply_cd".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_cd()));
-	    			
-	    		}else if("money_supply_qm".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_supply_qm()));
-	    			
-	    		}else if("ppi_food".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getPpi_food()));
-	    			
-	    		}else if("Shibor_rate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
-	    			
-	    		}else if("real_estate_invest_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getReal_estate_invest_dataValue()));
-	    			
-	    		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getDomestic_fiscal_expenditure_dataValue()));
-	    			
-	    		}else if("domestic_fiscal_income_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getDomestic_fiscal_income_dataValue()));
-	    			
-	    		}else if("economic_climate_index_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getEconomic_climate_index_dataValue()));
-	    			
-	    		}else if("consume_climate_index_dataValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getConsume_climate_index_dataValue()));
-	    			
-	    		}else if("base_loan_rate_1year".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBase_loan_rate_1year()));
-	    			
-	    		}else if("Inter_bank_lending_day_preCloseRate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_preCloseRate()));
-	    			
-	    		}else if("Inter_bank_lending_day_bpChg".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_bpChg()));
-	    			
-	    		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
-	    			
-	    		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverChg()));
-	    			
-	    		}else if("money_fund_7day_rate".equals(featureName)) {
-	    			bean3.setValue(Double.parseDouble(daily_Macro_Factor.getMoney_fund_7day_rate()));
-	    			
-	    		}
-	    		else {
-	    			//bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
-	    			
-	    		}
-	    		
-	    	}else if("".equals(targetName)){
-	    		
-	    	}else {
-	    		
-	    	}
-	    	
-				bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-				bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-				
-//				读取properties然后将数据转成前端可以显示的中文
-				String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-				String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-				
-				bean2.setName(targetName_CN);
-				bean3.setName(featureName_CN);
-				
-			
-			bean2_list.add(bean2);
-			bean2_list.add(bean3);
-			Bean1 bean1 = new Bean1();
-			bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-			bean1.setValue(bean2_list);
-			data.add(bean1);
-		}
+		ArrayList<Bean1> data = null;
+		
+		if("daily_buy_amounts".equals(targetName)) {
+    		if("p2p_pop_index".equals(featureName)) {
+    			
+    		}else if("p2p_interest_index".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_p2p_interest_indexList();
+
+    			 data = new ArrayList<Bean1>();
+    		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    		    	Bean2 bean3 = new Bean2();
+    		    	Bean2 bean2 = new Bean2();
+    		    		
+    		    	
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
+    					
+//    					读取properties然后将数据转成前端可以显示的中文
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    				
+    				bean2_list.add(bean2);
+    				bean2_list.add(bean3);
+    				Bean1 bean1 = new Bean1();
+    				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    				bean1.setValue(bean2_list);
+    				data.add(bean1);
+    			}
+    		}else if("p2p_develop_index".equals(featureName)) {
+    			
+    		}else if("p2p_term_index".equals(featureName)) {
+    			
+    		}else if("bond204_closePrice".equals(featureName)) {
+    			
+    		}
+    		else if("bond204_turnoverValue".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_bond204_turnoverValueList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBond204_turnoverValue()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}
+    		else if("cpi_cpi".equals(featureName)) {
+    			
+    		}else if("GDP_dataValue".equals(featureName)) {
+    			
+    		}else if("get_gdp_month_gdp_yoy".equals(featureName)) {
+    			
+    		}else if("hs300_close".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_hs300_closeList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("hs300_volume".equals(featureName)) {
+    			
+    		}else if("hs300_p_change".equals(featureName)) {
+    			
+    		}else if("hs300_ma5".equals(featureName)) {
+    			
+    		}else if("hs300_ma10".equals(featureName)) {
+    			
+    		}else if("hs300_ma20".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma5".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma10".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma20".equals(featureName)) {
+    			
+    		}else if("money_supply_m2".equals(featureName)) {
+    			
+    		}else if("money_supply_m2_yoy".equals(featureName)) {
+    			
+    		}else if("money_supply_cd".equals(featureName)) {
+    			
+    		}else if("money_supply_qm".equals(featureName)) {
+    			
+    		}else if("ppi_food".equals(featureName)) {
+    			
+    		}else if("Shibor_rate".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_Shibor_rateList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("real_estate_invest_dataValue".equals(featureName)) {
+    			
+    		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
+    			
+    		}else if("domestic_fiscal_income_dataValue".equals(featureName)) {
+    			
+    		}else if("economic_climate_index_dataValue".equals(featureName)) {
+    			
+    		}else if("consume_climate_index_dataValue".equals(featureName)) {
+    			
+    		}else if("base_loan_rate_1year".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_preCloseRate".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_bpChg".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_Inter_bank_lending_day_turnoverValueList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
+    			
+    		}else if("money_fund_7day_rate".equals(featureName)) {
+    			
+    		}
+    		else {
+    			//bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
+    			
+    		}
+ //------------------------------------------------------------------------------------------------------
+    	}else if("daily_redeem_amounts".equals(targetName)) {
+    		if("p2p_pop_index".equals(featureName)) {
+    			
+    		}else if("p2p_interest_index".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_p2p_interest_indexList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("p2p_develop_index".equals(featureName)) {
+    			
+    		}else if("p2p_term_index".equals(featureName)) {
+    			
+    		}else if("bond204_closePrice".equals(featureName)) {
+    			
+    		}
+    		else if("bond204_turnoverValue".equals(featureName)) {
+    			
+    		}
+    		else if("cpi_cpi".equals(featureName)) {
+    			
+    		}else if("GDP_dataValue".equals(featureName)) {
+    			
+    		}else if("get_gdp_month_gdp_yoy".equals(featureName)) {
+    			
+    		}else if("hs300_close".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_hs300_closeList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("hs300_volume".equals(featureName)) {
+    			
+    		}else if("hs300_p_change".equals(featureName)) {
+    			
+    		}else if("hs300_ma5".equals(featureName)) {
+    			
+    		}else if("hs300_ma10".equals(featureName)) {
+    			
+    		}else if("hs300_ma20".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma5".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma10".equals(featureName)) {
+    			
+    		}else if("hs300_v_ma20".equals(featureName)) {
+    			
+    		}else if("money_supply_m2".equals(featureName)) {
+    			
+    		}else if("money_supply_m2_yoy".equals(featureName)) {
+    			
+    		}else if("money_supply_cd".equals(featureName)) {
+    			
+    		}else if("money_supply_qm".equals(featureName)) {
+    			
+    		}else if("ppi_food".equals(featureName)) {
+    			
+    		}else if("Shibor_rate".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_Shibor_rateList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("real_estate_invest_dataValue".equals(featureName)) {
+    			
+    		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
+    			
+    		}else if("domestic_fiscal_income_dataValue".equals(featureName)) {
+    			
+    		}else if("economic_climate_index_dataValue".equals(featureName)) {
+    			
+    		}else if("consume_climate_index_dataValue".equals(featureName)) {
+    			
+    		}else if("base_loan_rate_1year".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_preCloseRate".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_bpChg".equals(featureName)) {
+    			
+    		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
+    			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_Inter_bank_lending_day_turnoverValueList();
+    			 data = new ArrayList<Bean1>();
+     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+     		    	Bean2 bean3 = new Bean2();
+     		    	Bean2 bean2 = new Bean2();
+     		    		
+     		    	
+     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
+     					
+//     					读取properties然后将数据转成前端可以显示的中文
+     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+     					
+     					bean2.setName(targetName_CN);
+     					bean3.setName(featureName_CN);
+     					
+     				
+     				bean2_list.add(bean2);
+     				bean2_list.add(bean3);
+     				Bean1 bean1 = new Bean1();
+     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+     				bean1.setValue(bean2_list);
+     				data.add(bean1);
+     			}
+    		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
+    			
+    		}else if("money_fund_7day_rate".equals(featureName)) {
+    			
+    		}
+    		else {
+    			//bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_pop_index()));
+    			
+    		}
+    		
+    	}else if("".equals(targetName)){
+    		
+    	}
+		
 		ResultObj resultObj=null;
 		
 		if(true) { //如果是成功就返回正常的数据
@@ -303,6 +441,7 @@ public class FeatureExploringController extends BaseController{
 		
 		
 	}
+	
 	
 }
 

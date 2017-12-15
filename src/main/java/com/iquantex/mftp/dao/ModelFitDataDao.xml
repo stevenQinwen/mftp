@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iquantex.mftp.dao.ModelFitDataDao">
+
+   <select id="selectModelParamBuyList"  resultType="modelFitData">
+       SELECT buy_amounts,buy_amounts_fit FROM model_result  
+       
+   </select>
+   <select id="selectModelParamRedeemList"  resultType="modelFitData">
+       SELECT redeem_amounts,redeem_amounts_fit FROM model_result  
+       
+   </select>
+    
+	
+	
+
+
+</mapper>
+
+
+
+
+
+
