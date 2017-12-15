@@ -2,74 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iquantex.mftp.dao.DailyMacrofactorDao">
 
-   <select id="selectDailyMacroFactorList" resultType="daily_Macro_Factor">
-       SELECT * FROM daily_marco_factor 
+   <select id="selectBuyAmounts_p2p_interest_indexList" resultType="daily_Macro_Factor">
+       SELECT date,daily_buy_amounts,p2p_interest_index FROM daily_marco_factor 
    </select>
+   <select id="selectBuyAmounts_hs300_closeList" resultType="daily_Macro_Factor">
+       SELECT date,daily_buy_amounts,hs300_close FROM daily_marco_factor 
+   </select>
+   <select id="selectBuyAmounts_bond204_turnoverValueList" resultType="daily_Macro_Factor">
+       SELECT date,daily_buy_amounts,bond204_turnoverValue FROM daily_marco_factor 
+   </select>
+   <select id="selectBuyAmounts_Shibor_rateList" resultType="daily_Macro_Factor">
+       SELECT date,daily_buy_amounts,Shibor_rate FROM daily_marco_factor 
+   </select>
+   <select id="selectBuyAmounts_Inter_bank_lending_day_turnoverValueList" resultType="daily_Macro_Factor">
+       SELECT date,daily_buy_amounts,Inter_bank_lending_day_turnoverValue FROM daily_marco_factor 
+   </select>
+   
+   
+   <select id="selectRedeemAmounts_p2p_interest_indexList" resultType="daily_Macro_Factor">
+       SELECT date,daily_redeem_amounts,p2p_interest_index FROM daily_marco_factor 
+   </select>
+   <select id="selectRedeemAmounts_hs300_closeList" resultType="daily_Macro_Factor">
+       SELECT date,daily_redeem_amounts,hs300_close FROM daily_marco_factor 
+   </select>
+   <select id="selectRedeemAmounts_bond204_turnoverValueList" resultType="daily_Macro_Factor">
+       SELECT date,daily_redeem_amounts,bond204_turnoverValue FROM daily_marco_factor 
+   </select>
+   <select id="selectRedeemAmounts_Shibor_rateList" resultType="daily_Macro_Factor">
+       SELECT date,daily_redeem_amounts,Shibor_rate FROM daily_marco_factor 
+   </select>
+   <select id="selectRedeemAmounts_Inter_bank_lending_day_turnoverValueList" resultType="daily_Macro_Factor">
+       SELECT date,daily_redeem_amounts,Inter_bank_lending_day_turnoverValue FROM daily_marco_factor 
+   </select>
+   
     
-	<!-- <sql id="selectCustomerListWhere">
-		<where>
-	      <if test="cust_name != null" >
-	        cust_name like "%"#{cust_name}"%"
-	      </if>
-	      <if test="cust_source != null" >
-	        and cust_source = #{cust_source}
-	      </if>
-	      <if test="cust_industry != null" >
-	        and cust_industry = #{cust_industry}
-	      </if>
-	      <if test="cust_level != null" >
-	        and cust_level = #{cust_level}
-	      </if>
-    	</where>
-	</sql>
 	
-	<select id="selectCustomerList" parameterType="customer" resultType="customer">
-		SELECT
-			cust_id,
-			cust_name,
-			cust_user_id,
-			cust_create_id,
-			b.dict_item_name cust_source,
-			c.dict_item_name cust_industry,
-			d.dict_item_name cust_level,
-			cust_linkman,
-			cust_phone,
-			cust_mobile,
-			cust_createtime
-		FROM
-			customer a
-		LEFT JOIN (
-			SELECT
-				dict_id,
-				dict_item_name
-			FROM
-				base_dict
-			WHERE
-				dict_type_code = '002'
-		) b ON a.cust_source = b.dict_id
-		LEFT JOIN (
-			SELECT
-				dict_id,
-				dict_item_name
-			FROM
-				base_dict
-			WHERE
-				dict_type_code = '001'
-		) c ON a.cust_industry = c.dict_id
-		LEFT JOIN (
-			SELECT
-				dict_id,
-				dict_item_name
-			FROM
-				base_dict
-			WHERE
-				dict_type_code = '006'
-		) d ON a.cust_level = d.dict_id
-		<include refid="selectCustomerListWhere"/>
-		<if test="start !=null and rows != null">
-			limit #{start},#{rows}
-		</if>
-	</select> -->
 	
 
 
