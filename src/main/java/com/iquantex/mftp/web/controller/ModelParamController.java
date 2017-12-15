@@ -24,14 +24,14 @@ import com.iquantex.mftp.dao.ModelParamTmpDao;
 @Controller
 
 @RequestMapping("/model_param")
-public class ModelParamTmpController extends BaseController{
+public class ModelParamController extends BaseController{
 	
 	@Autowired
 	private ModelParamTmpDao modelParamTmpDao;
 	@Autowired
 	private ModelParamDao modelParamDao;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/model_train_param/{buy_or_redeem}")//待定
+	@RequestMapping(method = RequestMethod.GET, value = "/model_fit_param/{buy_or_redeem}")//待定
 	public @ResponseBody ResultObj getModelParam(@PathVariable String buy_or_redeem) {
 		
 		List<ModelParam> custInfoList = modelParamDao.selectModelParamList(buy_or_redeem); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
