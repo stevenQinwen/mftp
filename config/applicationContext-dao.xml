@@ -41,6 +41,9 @@
 		<property name="configLocation" value="classpath:SqlMapConfig.xml" />
 		<!-- 配置pojo别名 -->
 		<property name="typeAliasesPackage" value="com.iquantex.mftp.bean"></property>
+		
+	    
+		
 	</bean>
 
 	

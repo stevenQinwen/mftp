@@ -117,7 +117,7 @@ public class ModelParamController extends BaseController{
 	@RequestMapping(method = RequestMethod.GET, value = "/model_fit_param/{buy_or_redeem}")//待定
 	public @ResponseBody ResultObj getModelFitParam(@PathVariable String buy_or_redeem) { //申购是01 赎回是02
 		
-		//使用字符串拼接的方式进行执行，这样比较灵活
+		//使用字符串拼接的方式进行执行，这样比较灵活，注入就注入，无所谓，我们不需要防范注入
 		SQLBean sqlBean = new SQLBean("SELECT \r\n" + 
 				"      \r\n" + 
 				"      t.One_intercept,\r\n" + 
