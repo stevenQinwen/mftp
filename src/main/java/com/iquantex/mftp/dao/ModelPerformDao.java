@@ -10,7 +10,7 @@ public interface ModelPerformDao {
 
 	List<ModelPerform> selectModelPerformList();
 
-	Map<String, Double> selectModel_performByDate(SQLBean sqlBean);
+	Map<String, Double> select_next7day_predicted(SQLBean sqlBean);
 	List<ModelPerform> selectModel_performRecent_Nday(SQLBean sqlBean);
 	
 	
