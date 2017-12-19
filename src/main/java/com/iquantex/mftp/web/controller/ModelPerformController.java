@@ -2,6 +2,7 @@ package com.iquantex.mftp.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import com.iquantex.mftp.bean.Bean2;
 import com.iquantex.mftp.bean.CustInfo;
 import com.iquantex.mftp.bean.Daily_Macro_Factor;
 import com.iquantex.mftp.bean.ModelPerform;
+import com.iquantex.mftp.bean.SQLBean;
+import com.iquantex.mftp.common.utils.ColumnsNameMapingUtils;
 import com.iquantex.mftp.common.utils.ResultObj;
 import com.iquantex.mftp.dao.CustInfoDao;
 import com.iquantex.mftp.dao.DailyMacrofactorDao;
@@ -32,94 +35,53 @@ public class ModelPerformController extends BaseController{
 	@Autowired
 	private ModelFitParamDao modelFitParamDao;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/age_distributed/{targetName}/{featureName}")//待定
-	public @ResponseBody ResultObj getAgeDistribute(@PathVariable String targetName,@PathVariable String featureName) {
+	@RequestMapping(method = RequestMethod.GET, value = "/model_predict/{begindate}/{enddate}")//待定
+	public @ResponseBody ResultObj getModel_perform(@PathVariable String begindate,@PathVariable String enddate) {
 		
-		List<ModelPerform> custInfoList = modelPerformDao.selectModelPerformList(); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
-		System.out.println(custInfoList);
 		
-		//我们的目的是为了封装成这个数据
-		/*"list": [
-		            {
-		                "name": "18-25岁",
-		                "value": [
-		                    {
-		                        "name": "人数",
-		                        "value": 3247342
-		                    }
-		                ]
-		            },
-		            {
-		                "name": "26-35岁",
-		                "value": [
-		                    {
-		                        "name": "人数",
-		                        "value": 2752199
-		                    }
-		                ]
-		            },
-		            {
-		                "name": "36-45岁",
-		                "value": [
-		                    {
-		                        "name": "人数",
-		                        "value": 3119816
-		                    }
-		                ]
-		            },
-		            {
-		                "name": "46-55岁",
-		                "value": [
-		                    {
-		                        "name": "人数",
-		                        "value": 3111133
-		                    }
-		                ]
-		            },
-		            {
-		                "name": "55岁以上",
-		                "value": [
-		                    {
-		                        "name": "人数",
-		                        "value": 2757762
-		                    }
-		                    
-		                ]
-		            }
-					]*/
-		//list:data
+		//这里是返回当天模型最后一次预测结果，未来7天的预测情况
+		//这里是按照日期进来然后取出对应的预测时间
+	    String sql="SELECT * FROM model_perform WHERE DATE_FORMAT(generate_time, \"%Y%m%d\")='"+begindate+"'   ORDER BY generate_time DESC LIMIT 1";
+	    
+	    //这里是选取某人时间段内的预测情况(就是使用这条sql就行了)
+	    String sql2="SELECT * FROM (SELECT * FROM model_perform  ORDER BY generate_time DESC) AS tt GROUP BY DATE_FORMAT(generate_time, \"%Y%m%d\") ORDER BY generate_time DESC  LIMIT 1";
+	    
+		//使用SQLBean的方式去拼接sql，然后使用map集合返回我们需要的东西
+		SQLBean sqlBean = new SQLBean(sql2);
+		//如何返回一个map,这是我们需要解决的问题
+//		Map<String,Double> map = modelPerformDao.selectModel_performByDate(sqlBean);
+		 List<ModelPerform> list = modelPerformDao.selectModel_performRecent_Nday(sqlBean);
+		
+		
 		ArrayList<Bean1> data = new ArrayList<Bean1>();
-	    for (ModelPerform daily_Macro_Factor : custInfoList) {
-	    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-	    	Bean2 bean3 = new Bean2();
-	    	Bean2 bean2 = new Bean2();
-	    	if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {
-	    		//这里是写用户分析图，到底是我要查询出什么样的数据返回去呢
-	    		
-				bean2.setName("申购金额");
-//				bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+		
+		 data = new ArrayList<Bean1>();
+		    for (ModelPerform modelPerform : list) {
+		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+		    	Bean2 b3 = new Bean2();
+		    	Bean2 b2 = new Bean2();
+		    	Bean2 b1 = new Bean2();
+		    		
+		    		
+		    		b1.setName("预测申购");
+		    		b1.setValue(modelPerform.getPd_next_1_day_buy_amounts());
+					
+					
 				
-				bean3.setName("p2p发展指数");
-//				bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-	    	
-	    	}	
-				if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {				
+				bean2_list.add(b3);
+				bean2_list.add(b2);
+				bean2_list.add(b1);
 				
+				Bean1 bean1 = new Bean1();
 				
-			
-				
-				
+				bean1.setName(modelPerform.getGenerate_time().toString().substring(0, 10).replace("-", "/"));
+				bean1.setValue(bean2_list);
+				data.add(bean1);
 			}
-			else {
-				
-			}
-			bean2_list.add(bean2);
-			bean2_list.add(bean3);
-			Bean1 bean1 = new Bean1();
-//			bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-			bean1.setValue(bean2_list);
-			data.add(bean1);
-		}
+		
+		
+		
+		
 		ResultObj resultObj=null;
 		
 		if(true) { //如果是成功就返回正常的数据
@@ -129,64 +91,7 @@ public class ModelPerformController extends BaseController{
 		}
 		resultObj.setMsg("成功");
 	    return resultObj;
-		
-		
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/sex_distributed/{targetName}/{featureName}")//待定
-	public @ResponseBody ResultObj getSexDistribute(@PathVariable String targetName,@PathVariable String featureName) {
-		
-		List<ModelPerform> custInfoList = modelPerformDao.selectModelPerformList(); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
-		
-		
-		
-		ArrayList<Bean1> data = new ArrayList<Bean1>();
-		
-	    for (ModelPerform daily_Macro_Factor : custInfoList) {
-	    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-	    	Bean2 bean3 = new Bean2();
-	    	Bean2 bean2 = new Bean2();
-	    	if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {
-	    		//这里是写用户分析图，到底是我要查询出什么样的数据返回去呢
-	    		
-				bean2.setName("申购金额");
-//				bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-				
-				bean3.setName("p2p发展指数");
-//				bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-	    	
-	    	}	
-				
-	    	
-	    	if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {				
-				
-				
-			
-				
-				
-			}
-			else {
-				
-			}
-			bean2_list.add(bean2);
-			bean2_list.add(bean3);
-			Bean1 bean1 = new Bean1();
-//			bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-			bean1.setValue(bean2_list);
-			data.add(bean1);
-		}
-		ResultObj resultObj=null;
-		
-		if(true) { //如果是成功就返回正常的数据
-			resultObj = successReturn().setData("list", data);
-		}else {
-			
-		}
-		resultObj.setMsg("成功");
-	    return resultObj;
-		
-	}
-	
 }
 
 
