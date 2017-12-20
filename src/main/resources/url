@@ -5,7 +5,7 @@
 模型集合数据：/mftp/model_param/model_fit_data/{buy_or_redeem}
 模型拟合参数：/mftp/model_param/model_fit_param/{buy_or_redeem}
 历史表现：/mftp/model_perform/get_his_perform/{begindate}/{enddate}
-模型预测未来：/mftp/model_perform/model_predict/{begindate}/{enddate}
+模型预测未来：/mftp/model_perform/today_model_predict
 
 
 

@@ -15,6 +15,7 @@ import com.iquantex.mftp.bean.Bean1;
 import com.iquantex.mftp.bean.Bean2;
 import com.iquantex.mftp.bean.Daily_Macro_Factor;
 import com.iquantex.mftp.bean.SQLBean;
+import com.iquantex.mftp.common.exception.ErrorCode;
 import com.iquantex.mftp.common.utils.ColumnsNameMapingUtils;
 import com.iquantex.mftp.common.utils.ResultObj;
 import com.iquantex.mftp.dao.DailyMacrofactorDao;
@@ -103,6 +104,7 @@ public class FeatureExploringController extends BaseController{
 		//List<Predict_Result> predict_ResultList = showModelResultService.findPredict_ResultList(feature1,feature2); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
 		//List<Daily_Macro_Factor> predict_ResultList = dailyMacrofactorDao.selectDailyMacroFactorList(targetName,featureName); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
 		
+		ResultObj resultObj=null;
 		ArrayList<Bean1> data = null;
 		
 		if("daily_buy_amounts".equals(targetName)) {
@@ -110,7 +112,8 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("p2p_interest_index".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_p2p_interest_indexList();
-
+    			if(list!=null&&list.size()!=0) { 
+    				
     			 data = new ArrayList<Bean1>();
     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
@@ -136,6 +139,11 @@ public class FeatureExploringController extends BaseController{
     				bean1.setValue(bean2_list);
     				data.add(bean1);
     			}
+    		    resultObj = successReturn().setData("list", data);
+	   			   resultObj.setMsg("成功");  
+			}else {
+				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
+			}
     		}else if("p2p_develop_index".equals(featureName)) {
     			
     		}else if("p2p_term_index".equals(featureName)) {
@@ -145,31 +153,40 @@ public class FeatureExploringController extends BaseController{
     		}
     		else if("bond204_turnoverValue".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_bond204_turnoverValueList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBond204_turnoverValue()));
-     					
-//     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
-     			}
+    			
+    			
+    			 if(list!=null&&list.size()!=0) { 
+    				 data = new ArrayList<Bean1>();
+    	     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    	     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    	     		    	Bean2 bean3 = new Bean2();
+    	     		    	Bean2 bean2 = new Bean2();
+    	     		    		
+    	     		    	
+    	     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+    	     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getBond204_turnoverValue()));
+    	     					
+//    	     					读取properties然后将数据转成前端可以显示的中文
+    	     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    	     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    	     					
+    	     					bean2.setName(targetName_CN);
+    	     					bean3.setName(featureName_CN);
+    	     					
+    	     				
+    	     				bean2_list.add(bean2);
+    	     				bean2_list.add(bean3);
+    	     				Bean1 bean1 = new Bean1();
+    	     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    	     				bean1.setValue(bean2_list);
+    	     				data.add(bean1);
+    	     			}
+    	     		   resultObj = successReturn().setData("list", data);
+    	   			   resultObj.setMsg("成功");  
+    			}else {
+    				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
+    			}
+    			
     		}
     		else if("cpi_cpi".equals(featureName)) {
     			
@@ -179,31 +196,39 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("hs300_close".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_hs300_closeList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
-     					
+    			
+    			if(list!=null&&list.size()!=0) { 
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
-     			}
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				 resultObj = successReturn().setData("list", data);
+  	   			    resultObj.setMsg("成功");
+    			}else {
+    				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
+    			}
     		}else if("hs300_volume".equals(featureName)) {
     			
     		}else if("hs300_p_change".equals(featureName)) {
@@ -232,31 +257,42 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("Shibor_rate".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_Shibor_rateList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
-     					
+    			
+    			
+    			if(list!=null&&list.size()!=0) { 
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				
+    				 resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
+    			
     		}else if("real_estate_invest_dataValue".equals(featureName)) {
     			
     		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
@@ -275,30 +311,38 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectBuyAmounts_Inter_bank_lending_day_turnoverValueList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
-     					
+    			 
+    			if(list!=null&&list.size()!=0) { 
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
     		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
     			
@@ -315,30 +359,38 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("p2p_interest_index".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_p2p_interest_indexList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
-     					
+    			
+    			if(list!=null&&list.size()!=0) {
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_interest_index()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
     		}else if("p2p_develop_index".equals(featureName)) {
     			
@@ -358,31 +410,40 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("hs300_close".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_hs300_closeList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
-     					
+    			if(list!=null&&list.size()!=0) {
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getHs300_close()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				
+    				resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
+    			
     		}else if("hs300_volume".equals(featureName)) {
     			
     		}else if("hs300_p_change".equals(featureName)) {
@@ -411,31 +472,41 @@ public class FeatureExploringController extends BaseController{
     			
     		}else if("Shibor_rate".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_Shibor_rateList();
-    			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
-     					
+    			
+    			if(list!=null&&list.size()!=0) {
+    				
+    				data = new ArrayList<Bean1>();
+    				for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					Bean2 bean3 = new Bean2();
+    					Bean2 bean2 = new Bean2();
+    					
+    					
+    					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+    					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getShibor_rate()));
+    					
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					
+    					bean2.setName(targetName_CN);
+    					bean3.setName(featureName_CN);
+    					
+    					
+    					bean2_list.add(bean2);
+    					bean2_list.add(bean3);
+    					Bean1 bean1 = new Bean1();
+    					bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					bean1.setValue(bean2_list);
+    					data.add(bean1);
+    				}
+    				resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
+    			
+    			
     		}else if("real_estate_invest_dataValue".equals(featureName)) {
     			
     		}else if("domestic_fiscal_expenditure_dataValue".equals(featureName)) {
@@ -455,30 +526,39 @@ public class FeatureExploringController extends BaseController{
     		}else if("Inter_bank_lending_day_turnoverValue".equals(featureName)) {
     			List<Daily_Macro_Factor> list = dailyMacrofactorDao.selectRedeemAmounts_Inter_bank_lending_day_turnoverValueList();
     			 data = new ArrayList<Bean1>();
-     		    for (Daily_Macro_Factor daily_Macro_Factor : list) {
-     		    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-     		    	Bean2 bean3 = new Bean2();
-     		    	Bean2 bean2 = new Bean2();
-     		    		
-     		    	
-     					bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
-     					bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
-     					
+    			 if(list!=null&&list.size()!=0) {
+    				 
+    				 for (Daily_Macro_Factor daily_Macro_Factor : list) {
+    					 List<Bean2> bean2_list =new ArrayList<Bean2>(2);
+    					 Bean2 bean3 = new Bean2();
+    					 Bean2 bean2 = new Bean2();
+    					 
+    					 
+    					 bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+    					 bean3.setValue(Double.parseDouble(daily_Macro_Factor.getInter_bank_lending_day_turnoverValue()));
+    					 
 //     					读取properties然后将数据转成前端可以显示的中文
-     					String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
-     					String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
-     					
-     					bean2.setName(targetName_CN);
-     					bean3.setName(featureName_CN);
-     					
-     				
-     				bean2_list.add(bean2);
-     				bean2_list.add(bean3);
-     				Bean1 bean1 = new Bean1();
-     				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-     				bean1.setValue(bean2_list);
-     				data.add(bean1);
+    					 String targetName_CN = ColumnsNameMapingUtils.transform2ChineseName(targetName);
+    					 String featureName_CN = ColumnsNameMapingUtils.transform2ChineseName(featureName);
+    					 
+    					 bean2.setName(targetName_CN);
+    					 bean3.setName(featureName_CN);
+    					 
+    					 
+    					 bean2_list.add(bean2);
+    					 bean2_list.add(bean3);
+    					 Bean1 bean1 = new Bean1();
+    					 bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+    					 bean1.setValue(bean2_list);
+    					 data.add(bean1);
+    				 
+    			 }
+    				resultObj = successReturn().setData("list", data);
+   	   			    resultObj.setMsg("成功");
+     			}else {
+     				resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
      			}
+    			 
     		}else if("Inter_bank_lending_day_turnoverChg".equals(featureName)) {
     			
     		}else if("money_fund_7day_rate".equals(featureName)) {
@@ -490,17 +570,13 @@ public class FeatureExploringController extends BaseController{
     		}
     		
     	}else if("".equals(targetName)){
-    		
+    		resultObj = errorReturn(ErrorCode.OK, "所请求的数据不存在，请检查！");
     	}
 		
-		ResultObj resultObj=null;
 		
-		if(true) { //如果是成功就返回正常的数据
-			resultObj = successReturn().setData("list", data);
-		}else {
 			
-		}
-		resultObj.setMsg("成功");
+			
+			
 	    return resultObj;
 		
 		
