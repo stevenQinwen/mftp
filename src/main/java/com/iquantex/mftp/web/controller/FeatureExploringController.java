@@ -2,6 +2,7 @@ package com.iquantex.mftp.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.iquantex.mftp.bean.Bean1;
 import com.iquantex.mftp.bean.Bean2;
 import com.iquantex.mftp.bean.Daily_Macro_Factor;
+import com.iquantex.mftp.bean.SQLBean;
 import com.iquantex.mftp.common.utils.ColumnsNameMapingUtils;
 import com.iquantex.mftp.common.utils.ResultObj;
 import com.iquantex.mftp.dao.DailyMacrofactorDao;
@@ -25,6 +27,68 @@ public class FeatureExploringController extends BaseController{
 	
 	@Autowired
 	private DailyMacrofactorDao dailyMacrofactorDao;
+	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/select_his_trends",produces = "application/json; charset=utf-8")
+	public @ResponseBody ResultObj getHistory_Trends() {
+		
+		  String sql="select date, d.daily_buy_times,d.daily_redeem_times,d.daily_buy_amounts,d.daily_redeem_amounts from daily_marco_factor d";
+		    
+		  //使用SQLBean的方式去拼接sql，然后使用map集合返回我们需要的东西
+			SQLBean sqlBean = new SQLBean(sql);
+			//如何返回一个map,这是我们需要解决的问题
+			 List<Daily_Macro_Factor> history_Trends = dailyMacrofactorDao.selectHistory_Trends(sqlBean);
+			 
+		   System.out.println(history_Trends);
+		
+
+		   ArrayList<Bean1> data = new ArrayList<Bean1>();
+		    for (Daily_Macro_Factor daily_Macro_Factor : history_Trends) {
+		    	List<Bean2> bean2_list =new ArrayList<Bean2>();
+		    	
+		    	Bean2 b4 = new Bean2();
+		    	Bean2 b3 = new Bean2();
+		    	Bean2 b2 = new Bean2();
+		    	Bean2 b1 = new Bean2();
+		    		
+		    	
+					b1.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_times()));
+					b2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
+					b3.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_times()));
+					b4.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_redeem_amounts()));
+					
+//					读取properties然后将数据转成前端可以显示的中文
+					
+					b1.setName("申购次数");
+					b2.setName("申购金额");
+					b3.setName("赎回次数");
+					b4.setName("赎回金额");
+					
+				
+				bean2_list.add(b1);
+				bean2_list.add(b2);
+				bean2_list.add(b3);
+				bean2_list.add(b4);
+				
+				Bean1 bean1 = new Bean1();
+				bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
+				bean1.setValue(bean2_list);
+				data.add(bean1);
+		    }
+		    
+		    ResultObj resultObj=null;
+		    
+		    if(true) { //如果是成功就返回正常的数据
+		    	resultObj = successReturn().setData("list", data);
+		    }else {
+		    	
+		    }
+		    resultObj.setMsg("成功");
+		    return resultObj ;
+		
+	}
+	
+	
 	
 	/**
 	 * 根据传递进来的列名字，我们返回相应的列

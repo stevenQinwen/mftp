@@ -34,7 +34,6 @@ import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;  
 
 @Controller
-
 @RequestMapping("/model_perform")
 public class ModelPerformController extends BaseController{
 	
@@ -57,7 +56,7 @@ public class ModelPerformController extends BaseController{
 	@RequestMapping(method = RequestMethod.GET, value = "/get_his_perform/{begindate}/{enddate}")//待定
 	public @ResponseBody ResultObj getModel_HistoryPerform(@PathVariable String begindate,@PathVariable String enddate) {
 		
-		 String sql="SELECT DATE_FORMAT(t.generate_time, \"%Y%m%d\") as generate_time,t.current_day_actual_buy_amounts,t.current_day_actual_redeem_amounts,t.current_day_actual_redeem_amounts,t.pd_next_1_day_buy_amounts FROM (SELECT * FROM model_perform  ORDER BY generate_time DESC) t GROUP BY DATE_FORMAT(t.generate_time, \"%Y%m%d\") LIMIT 15" ;//选出最早一条数据
+		 String sql="SELECT t.generate_time as 'generate_time',t.current_day_actual_buy_amounts,t.current_day_actual_redeem_amounts,t.current_day_actual_redeem_amounts,t.pd_next_1_day_buy_amounts FROM (SELECT * FROM model_perform  ORDER BY generate_time DESC) t GROUP BY DATE_FORMAT(t.generate_time, \"%Y%m%d\") LIMIT 15" ;//选出最早一条数据
 		 
 		 SQLBean sqlBean = new SQLBean(sql);
 		 
@@ -97,7 +96,11 @@ public class ModelPerformController extends BaseController{
 				bean2_list.add(b4);
 				
 				Bean1 bean1 = new Bean1();
-				bean1.setName(modelPerform.getGenerate_time().toString());
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+				String dateString = formatter.format(modelPerform.getGenerate_time());
+				bean1.setName(dateString);
+				
+				
 				bean1.setValue(bean2_list);
 				data.add(bean1);
 			}

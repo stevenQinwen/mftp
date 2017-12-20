@@ -30,6 +30,7 @@ public class ModelParamController extends BaseController{
 	private ModelFitParamDao modelFitParamDao;
 	@Autowired
 	private ModelFitDataDao modelFitDataDao;
+	
 	/**
 	 * 这是训练集上的参数
 	 * @param buy_or_redeem

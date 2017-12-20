@@ -89,8 +89,24 @@ public class Daily_Macro_Factor implements Serializable{
 	private String daily_buy_amounts;
 	private String daily_redeem_amounts;
 	private String money_fund_7day_rate;
+	private String daily_buy_times;
+	private String daily_redeem_times;
 	
 	
+	
+	
+	public String getDaily_buy_times() {
+		return daily_buy_times;
+	}
+	public void setDaily_buy_times(String daily_buy_times) {
+		this.daily_buy_times = daily_buy_times;
+	}
+	public String getDaily_redeem_times() {
+		return daily_redeem_times;
+	}
+	public void setDaily_redeem_times(String daily_redeem_times) {
+		this.daily_redeem_times = daily_redeem_times;
+	}
 	
 	public String getDate() {
 		return date;
@@ -319,6 +335,30 @@ public class Daily_Macro_Factor implements Serializable{
 	}
 	public void setMoney_fund_7day_rate(String money_fund_7day_rate) {
 		this.money_fund_7day_rate = money_fund_7day_rate;
+	}
+	@Override
+	public String toString() {
+		return "Daily_Macro_Factor [date=" + date + ", p2p_pop_index=" + p2p_pop_index + ", p2p_interest_index="
+				+ p2p_interest_index + ", p2p_develop_index=" + p2p_develop_index + ", p2p_term_index=" + p2p_term_index
+				+ ", bond204_closePrice=" + bond204_closePrice + ", bond204_turnoverValue=" + bond204_turnoverValue
+				+ ", cpi_cpi=" + cpi_cpi + ", GDP_dataValue=" + GDP_dataValue + ", get_gdp_month_gdp_yoy="
+				+ get_gdp_month_gdp_yoy + ", hs300_close=" + hs300_close + ", hs300_volume=" + hs300_volume
+				+ ", hs300_price_change=" + hs300_price_change + ", hs300_ma5=" + hs300_ma5 + ", hs300_ma10="
+				+ hs300_ma10 + ", hs300_ma20=" + hs300_ma20 + ", hs300_v_ma5=" + hs300_v_ma5 + ", hs300_v_ma10="
+				+ hs300_v_ma10 + ", hs300_v_ma20=" + hs300_v_ma20 + ", money_supply_m2=" + money_supply_m2
+				+ ", money_supply_m2_yoy=" + money_supply_m2_yoy + ", money_supply_cd=" + money_supply_cd
+				+ ", money_supply_qm=" + money_supply_qm + ", ppi_food=" + ppi_food + ", Shibor_rate=" + Shibor_rate
+				+ ", real_estate_invest_dataValue=" + real_estate_invest_dataValue
+				+ ", domestic_fiscal_expenditure_dataValue=" + domestic_fiscal_expenditure_dataValue
+				+ ", domestic_fiscal_income_dataValue=" + domestic_fiscal_income_dataValue
+				+ ", economic_climate_index_dataValue=" + economic_climate_index_dataValue
+				+ ", consume_climate_index_dataValue=" + consume_climate_index_dataValue + ", base_loan_rate_1year="
+				+ base_loan_rate_1year + ", Inter_bank_lending_day_preCloseRate=" + Inter_bank_lending_day_preCloseRate
+				+ ", Inter_bank_lending_day_bpChg=" + Inter_bank_lending_day_bpChg
+				+ ", Inter_bank_lending_day_turnoverValue=" + Inter_bank_lending_day_turnoverValue
+				+ ", Inter_bank_lending_day_turnoverChg=" + Inter_bank_lending_day_turnoverChg + ", daily_buy_amounts="
+				+ daily_buy_amounts + ", daily_redeem_amounts=" + daily_redeem_amounts + ", money_fund_7day_rate="
+				+ money_fund_7day_rate + "]";
 	}
 	
 	

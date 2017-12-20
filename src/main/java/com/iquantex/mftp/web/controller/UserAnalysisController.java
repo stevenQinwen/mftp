@@ -34,8 +34,8 @@ public class UserAnalysisController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "sex_distributed/{buyOrRedeem}")//待定
-	@ResponseBody
-	public JSONObject getSexDistributed(@PathVariable String buyOrRedeem) {
+	
+	public @ResponseBody ResultObj getSexDistributed(@PathVariable String buyOrRedeem) {
 		
 		 String sql="SELECT COUNT(CASE u.sex WHEN '0' THEN u.sex END) AS \"female\" ,\r\n" + 
 		 		"   COUNT(CASE u.sex WHEN '1' THEN u.sex END) AS \"male\",\r\n" + 
@@ -47,7 +47,7 @@ public class UserAnalysisController extends BaseController{
 			Map<String,Double> map = custInfoDao.selectCustSexDistributed(sqlBean);
 			System.out.println(map);
 			
-			String json="{\r\n" + 
+			String data="{\r\n" + 
 					"    \"list\": [\r\n" + 
 					"        {\r\n" + 
 					"            \"name\": \"性别\",\r\n" + 
@@ -79,13 +79,23 @@ public class UserAnalysisController extends BaseController{
 					"    ]\r\n" + 
 					"}";
 			
-			JSONObject parseObject = JSON.parseObject(json);
-			return parseObject;
+             JSONObject parseObject = JSON.parseObject(data);
+			
+			 ResultObj resultObj=null;
+				
+				if(true) { //如果是成功就返回正常的数据
+					resultObj = successReturn().setData("list", parseObject);
+				}else {
+					
+				}
+				resultObj.setMsg("成功");
+			    return resultObj;
+			
+			
 	}
 	
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "/age_distributed/{buyOrRedeem}")//待定
-	public  JSONObject getAgeDistribute(@PathVariable String buyOrRedeem) {
+	public  @ResponseBody ResultObj getAgeDistribute(@PathVariable String buyOrRedeem) {
 		
 		
 	    String sql="SELECT \r\n" + 
@@ -164,57 +174,20 @@ public class UserAnalysisController extends BaseController{
 				"    ]\r\n" + 
 				"}";
 		
-		JSONObject parseObject = JSON.parseObject(json);
-		return parseObject;
+		    JSONObject parseObject = JSON.parseObject(json);
+		
+				 ResultObj resultObj=null;
+					
+					if(true) { //如果是成功就返回正常的数据
+						resultObj = successReturn().setData("list", parseObject);
+					}else {
+						
+					}
+					resultObj.setMsg("成功");
+	    return resultObj;
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/sex_distributed/{targetName}/{featureName}")//待定
-	public @ResponseBody ResultObj getSexDistribute(@PathVariable String targetName,@PathVariable String featureName) {
-		
-		List<CustInfo> custInfoList = custInfoDao.selectCustInfoList(); //但是这样的话我们就每次都是从数据库里面查询出同样的数据
-		
-		
-		
-		ArrayList<Bean1> data = new ArrayList<Bean1>();
-		
-	    for (CustInfo daily_Macro_Factor : custInfoList) {
-	    	List<Bean2> bean2_list =new ArrayList<Bean2>(2);
-	    	Bean2 bean3 = new Bean2();
-	    	Bean2 bean2 = new Bean2();
-	    	if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {
-	    		//这里是写用户分析图，到底是我要查询出什么样的数据返回去呢
-	    		
-				bean2.setName("申购金额");
-//				bean2.setValue(Double.parseDouble(daily_Macro_Factor.getDaily_buy_amounts()));
-				
-				bean3.setName("p2p发展指数");
-//				bean3.setValue(Double.parseDouble(daily_Macro_Factor.getP2p_develop_index()));
-	    	
-	    	}	
-				if("buy_times".equals(targetName)&&"redeem_times".equals(featureName)) {				
-			    
-			}
-			else {
-				
-			}
-			bean2_list.add(bean2);
-			bean2_list.add(bean3);
-			Bean1 bean1 = new Bean1();
-//			bean1.setName(daily_Macro_Factor.getDate().substring(0, 10).replace("-", "/"));
-			bean1.setValue(bean2_list);
-			data.add(bean1);
-		}
-		ResultObj resultObj=null;
-		
-		if(true) { //如果是成功就返回正常的数据
-			resultObj = successReturn().setData("list", data);
-		}else {
-			
-		}
-		resultObj.setMsg("成功");
-	    return resultObj;
-	}
 	
 }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.iquantex.mftp.bean.Daily_Macro_Factor;
+import com.iquantex.mftp.bean.SQLBean;
 
 
 
@@ -24,6 +25,9 @@ public interface DailyMacrofactorDao {
 	 public List<Daily_Macro_Factor>  selectRedeemAmounts_bond204_turnoverValueList ();
 	 public List<Daily_Macro_Factor>  selectRedeemAmounts_Shibor_rateList ();
 	 public List<Daily_Macro_Factor>  selectRedeemAmounts_Inter_bank_lending_day_turnoverValueList ();
+	 
+	 public List<Daily_Macro_Factor>  selectHistory_Trends (SQLBean sqlBean);
+
 	 
 	 
 	 
