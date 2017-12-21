@@ -155,6 +155,21 @@ public class ModelPerform {
 	}
 	public void setPd_next_7_day_redeem_amounts(Double pd_next_7_day_redeem_amounts) {
 		this.pd_next_7_day_redeem_amounts = pd_next_7_day_redeem_amounts;
+	}
+	@Override
+	public String toString() {
+		return "ModelPerform [generate_time=" + generate_time + ", current_day_actual_buy_amounts="
+				+ current_day_actual_buy_amounts + ", current_day_actual_redeem_amounts="
+				+ current_day_actual_redeem_amounts + ", pd_next_1_day_buy_amounts=" + pd_next_1_day_buy_amounts
+				+ ", pd_next_2_day_buy_amounts=" + pd_next_2_day_buy_amounts + ", pd_next_3_day_buy_amounts="
+				+ pd_next_3_day_buy_amounts + ", pd_next_4_day_buy_amounts=" + pd_next_4_day_buy_amounts
+				+ ", pd_next_5_day_buy_amounts=" + pd_next_5_day_buy_amounts + ", pd_next_6_day_buy_amounts="
+				+ pd_next_6_day_buy_amounts + ", pd_next_7_day_buy_amounts=" + pd_next_7_day_buy_amounts
+				+ ", pd_next_1_day_redeem_amounts=" + pd_next_1_day_redeem_amounts + ", pd_next_2_day_redeem_amounts="
+				+ pd_next_2_day_redeem_amounts + ", pd_next_3_day_redeem_amounts=" + pd_next_3_day_redeem_amounts
+				+ ", pd_next_4_day_redeem_amounts=" + pd_next_4_day_redeem_amounts + ", pd_next_5_day_redeem_amounts="
+				+ pd_next_5_day_redeem_amounts + ", pd_next_6_day_redeem_amounts=" + pd_next_6_day_redeem_amounts
+				+ ", pd_next_7_day_redeem_amounts=" + pd_next_7_day_redeem_amounts + "]";
 	} 
 	
 	

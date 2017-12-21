@@ -19,7 +19,6 @@
        SELECT date,daily_buy_amounts,Inter_bank_lending_day_turnoverValue FROM daily_marco_factor 
    </select>
    
-   
    <select id="selectRedeemAmounts_p2p_interest_indexList" resultType="daily_Macro_Factor">
        SELECT date,daily_redeem_amounts,p2p_interest_index FROM daily_marco_factor 
    </select>
@@ -34,6 +33,9 @@
    </select>
    <select id="selectRedeemAmounts_Inter_bank_lending_day_turnoverValueList" resultType="daily_Macro_Factor">
        SELECT date,daily_redeem_amounts,Inter_bank_lending_day_turnoverValue FROM daily_marco_factor 
+   </select>
+   <select id="selectHistory_Trends" parameterType="string" resultType="daily_Macro_Factor">
+       ${sql}
    </select>
    
     
